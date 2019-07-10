@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import Links from '/imports/api/links';
+import Users from '/imports/api/users';
 
 function insertLink(title, url) {
   Links.insert({ title, url, createdAt: new Date() });
