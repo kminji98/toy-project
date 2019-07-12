@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Posts } from '../api/posts/publications.js';
+
 import Users from '../api/users';
-import { Texts } from '../api/texts';
 import ShowLinks from '../api/example'
 
 class Login extends Component {
@@ -19,12 +19,18 @@ class Login extends Component {
 
     saveText(event){
         event.preventDefault();
+        // VDOM attr인 refs로 접근
         // const tt = ReactDOM.findDOMNode(this.refs.textInput).value;
         // this.setState({text: tt});
-        Users.insert({
-            text: this.state.text, 
-            createAt: new Date(),
-        });
+        
+        //mini mongo
+        // Users.insert({
+        //     text: this.state.text, 
+        //     createAt: new Date(),
+        // });
+        // mongo db - server -> method call
+        Meteor.call('posts.insert', this.state.text);
+
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
@@ -37,28 +43,32 @@ class Login extends Component {
   handleChange(e){
     this.setState({text: e.target.value});
   }
-  showUsers(user) {
+  showPosts(post) {
     return (
-      <li key={user._id}>
-        {user.text}
+      <li key={post._id}>
+        {post.text}
+        <button onClick={()=> Meteor.call('posts.remove', post._id)}>del</button>
       </li>
+      
     );
   }
+  deleteThisPost(id){
+      console.log(id);
+      Meteor.call('posts.remove',id);
+  }
   render() {
-      const users = this.props.users.map(
-          user => this.showUsers(user)
+      const posts = this.props.posts.map(
+          post => this.showPosts(post)
       );
     return (
       <div>
-          <button>Another Page</button>
           <form onSubmit={this.saveText.bind(this)}>
              <input onChange={this.handleChange} type="text" text={this.state.text} ref="textInput" />
           </form>
         <button onClick={this.saveText.bind(this)}>Save Text</button>
         <br/>
         <button onClick={() => this.increment()}>Click Me</button>
-        <p>You've pressed the button {this.state.counter} times.</p>
-        <ul>{ users }</ul>
+        <ul>{ posts }</ul>
       </div>
     );
   }
@@ -67,7 +77,9 @@ class Login extends Component {
 }
 
 export default LoginContainer = withTracker(() => {
+    Meteor.subscribe('posts');
     return {
-      users: Users.find({ }).fetch(),
+        //Login의 props로 넘겨준다. 
+      posts: Posts.find({ }).fetch(),
     };
   })(Login);

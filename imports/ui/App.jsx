@@ -1,37 +1,29 @@
 import React from 'react';
-import Hello from './Hello.jsx';
-import  LoginForm  from './LoginLayout.jsx';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import Login from './Login.jsx';
+import  LoginForm  from './layouts/LoginLayout.jsx';
+import  HeaderLayout  from './layouts/HeaderLayout.jsx';
 import Info from './Info.jsx';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Login from './Login.jsx';
-
 const App = () => (
-
   <div>
   <Router>
-    <ul>
-      <li>
-          <Link to="/login">Login</Link> 
-        </li>
-        <li>
-          <Link to="/join">Join</Link>
-        </li>
-    </ul>
+  <HeaderLayout />
+    {/* exact path의 개념 */}
+      <Route exact path="/" component={Home} /> 
       <Route path="/login" component={LoginForm} /> 
       <Route path="/join" component={Join} />
-
   </Router>
- 
     <h1>HI</h1>
     <Login />
   </div>
 );
 
-function Login0() {
+function Home() {
   return (
       <div>
-      <h2>Login</h2>
+      <h2>Home</h2>
       </div> 
   );
 }
