@@ -1,61 +1,63 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/posts/posts.js';
 import TestPost from './TestPost.jsx';
+import BaseComponent from './BaseComponent.jsx';
 
-class TestInputText extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            text :'',
-            counter: 0,
-        }
-        this.handleChange = this.handleChange.bind(this);
-    }
 
-    saveText(event){
-        event.preventDefault();
-        // VDOM attr인 refs로 접근
-        // const tt = ReactDOM.findDOMNode(this.refs.textInput).value;
-        // ReactDOM.findDOMNode(this.refs.textInput).value = '';
-        // this.setState({text: tt});
-        
-        //mini mongo
-        // Users.insert({
-        //     text: this.state.text, 
-        //     createAt: new Date(),
-        // });
-        // mongo db - server -> method call
-        //callback ?????
-        Meteor.call('posts.insert', this.state.text);
-        console.log('text: ', this.state.text);
-        // Clear form
-        this.setState({
-          text: ''}
-        );
+class TestInputText extends BaseComponent {
+  constructor(props){
+    super(props);
+    
+    this.state = {
+        text :'',
+        counter: 0,
+        redirectTo: null,
+        errors:{},
     }
-    handleChange(e){
-        this.setState({text: e.target.value});
-    }
-    increment() {
-        this.setState({
-        counter: this.state.counter + 1
-        });
-    }
+    this.handleChange = this.handleChange.bind(this);
+  }
   
-    deleteThisPost(id){
-        Meteor.call('posts.remove',id);
-    }
-    showPosts(post) {
-        return (
-        <li key={post._id}>
-            {post.text}
-            <button onClick={()=> Meteor.call('posts.remove', post._id)}>del</button>
-        </li>
-        );
-    }
+  saveText(event){
+      event.preventDefault();
+      // VDOM attr인 refs로 접근
+      // const tt = ReactDOM.findDOMNode(this.refs.textInput).value;
+      // ReactDOM.findDOMNode(this.refs.textInput).value = '';
+      // this.setState({text: tt});
+      
+      //mini mongo
+      // Users.insert({
+      //     text: this.state.text, 
+      //     createAt: new Date(),
+      // });
+      // mongo db - server -> method call
+      //callback ?????
+      Meteor.call('posts.insert', this.state.text,()=>{ 
+        this.redirectTo('/');
+      });
+      console.log('text: ', this.state.text);
+      // Clear form
+      this.setState({
+        text: ''}
+      );
+  }
+  handleChange(e){
+      this.setState({text: e.target.value});
+  }
+  
+  deleteThisPost(id){
+      Meteor.call('posts.remove',id);
+  }
+  showPosts(post) {
+      return (
+      <li key={post._id}>
+          {post.text}
+          <button onClick={()=> Meteor.call('posts.remove', post._id)}>del</button>
+      </li>
+      );
+  }
   renderPost(){
     let postsList = this.props.posts;
     return postsList.map((post) => {
@@ -78,6 +80,7 @@ class TestInputText extends Component {
         <br/>
         <button onClick={() => this.increment()}>Click Me</button>
         <ul>{ this.renderPost() }</ul>
+        {/* {this.renderRedirect()}        */}
       </div>
     );
   }

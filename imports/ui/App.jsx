@@ -2,19 +2,22 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import TestInputText from './components/TestInputText.jsx';
-import  Header  from './components/Header.jsx';
+import  Header   from './components/Header.jsx';
+import  Post   from './components/Post.jsx';
 
 
 const App = () => (
   <div>
   <Router>
-  <Header />
+    <Header />
     {/* exact path의 개념 */}
-      <Route exact path="/" component={Home} /> 
+      <Route exact path="/" render={Home} /> 
       <Route path="/join" component={Join} />
-  </Router>
+      <Route path="/post" component={Post} />
+
     <h1>HI</h1>
     <TestInputText />
+  </Router>
   </div>
 );
 
