@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Links from '/imports/api/links';
-import Users from '/imports/api/users';
-import Posts from '/imports/api/posts/publications';
+
+import Posts from '/imports/api/posts/server/publications';
 
 function insertLink(title, url) {
   Links.insert({ title, url, createdAt: new Date() });

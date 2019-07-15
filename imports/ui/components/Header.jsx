@@ -1,10 +1,15 @@
 import React from 'react'
+import { Meteor } from 'meteor/meteor'
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
-import  ModalLogin  from './ModalLogin.jsx';
+
+import  LoginModal  from './LoginModal.jsx';
+import  SignUpModal  from './SignUpModal.jsx';
+
+
 import  { Container,Grid,List,Menu,Icon, Button} from 'semantic-ui-react'
 import '../stylesheets/header'
 
-const HeaderLayout = () => (
+const Header = () => (
   <div class="ui stackable teal inverted menu">
     <div class="ui left text menu" >
       <NavLink to="/blog">
@@ -20,12 +25,16 @@ const HeaderLayout = () => (
       </NavLink>
     </div>
     <div class="ui text menu" >
-      <ModalLogin />
-      <NavLink to="/login">
-        <Button content='SIGN UP' inverted basic/>
-      </NavLink>
+      {Meteor.userId() ?
+        <Button content='Log Out' inverted basic onClick={ () => Meteor.logout()}></Button>
+        : <LoginModal />
+      }
+      {!Meteor.userId() ?
+        <SignUpModal />
+        : null
+      }
     </div>
   </div>
 )
 
-export default HeaderLayout
+export default Header
