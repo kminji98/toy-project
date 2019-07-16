@@ -14,9 +14,9 @@ const App = () => (
       <Route exact path="/" render={Home} /> 
       <Route path="/join" component={Join} />
       <Route path="/post" component={Post} />
-
+{/* 
     <h1>HI</h1>
-    <TestInputText />
+    <TestInputText /> */}
   </Router>
   </div>
 );

@@ -3,23 +3,65 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
 
 import { Button, Modal, Form, Grid, Header, Image, Segment, Icon } from 'semantic-ui-react'
+import { Accounts } from 'meteor/accounts-base';
 
 
 class EditProfileModal extends Component{
   constructor(props){
     super(props);
+    
+    this.state = { 
+      email:'',
+      password:'',
+      newPassword:'',
+      phone:'',
+      username: '',
+      errors:'',
+    }
   }
-  state = { 
-    email:'',
-    password:'',
-    errors:'',
+  componentDidUpdate(prevProps){
+    if(prevProps.user !== this.props.user){
+      this.setState({ 
+        username : this.props.user.profile.username, 
+        phone : this.props.user.profile.phone, 
+      })
+    }
+    // console.log("didUpdate : "+this.props.user  + " prev : "+prevProps.user)
+    // update된 상황에 사용,  조건문을 잘 써야 함(it must be wrapped in a condition , or you'll cause an infinite loop.)
   }
 
+  editProfile = () => {
+    const oldPassword = this.state.password; 
+    const newPassword = this.state.newPassword; 
+    const phone = this.state.phone;
+    const username = this.state.username;
+
+    if(!oldPassword || !newPassword){
+      window.alert("password를 입력해주세요");
+      return;
+    }
+
+    Accounts.changePassword(oldPassword, newPassword, (err)=> {
+      if(err){
+        window.alert(err);
+      }else{ 
+        Meteor.users.update( Meteor.userId(),{
+          $set: {
+            profile: {
+              phone,
+              username
+            }
+          }
+        }, (err)=>{
+          if(!err){ window.location.reload() }
+        });
+      }
+    })
+
+    
+  }
 
   render(){
-      if(this.props.user){
-          console.log(this.props.user.emails[0].address);
-        }
     return(
       <Modal dimmer="inverted" trigger={ <Button icon="user" content={this.props.user ? this.props.user.profile.username : 'null'} 
             inverted basic ></Button>}>
@@ -31,13 +73,16 @@ class EditProfileModal extends Component{
               </Header>
               <Form size='large' onSubmit={this.signUp}>
                 <Segment stacked>
-                {/* <Image src='https://react.semantic-ui.com/images/wireframe/square-image.png' size='tiny' circular verticalAlign='middle'/> */}
-                {/* <Divider /> */}
+                  {/* 이미지가 있는 경우 */}
+                  {/* <Image src='https://react.semantic-ui.com/images/wireframe/square-image.png' size='tiny' circular verticalAlign='middle'/> */}
+                  {/* <Divider /> */}
               
                   <Form.Input fluid icon='mail' iconPosition='left' type="email" 
-                     value={this.props.user ? this.props.user.emails[0].address : ''} readOnly />
+                     value={this.props.user ? this.props.user.emails[0].address : ''} readOnly 
+                  />
 
                   <Form.Input fluid icon='user' iconPosition='left' placeholder='Name' 
+                     value={this.state.username} 
                      onChange={e => this.setState({ username: e.target.value})}
                   />
                   <Form.Input
@@ -46,6 +91,7 @@ class EditProfileModal extends Component{
                     iconPosition='left'
                     placeholder='Password'
                     type='password'
+                    value={this.state.password} 
                     onChange={e => this.setState({ password: e.target.value})}
                   />
                   <Form.Input
@@ -54,7 +100,8 @@ class EditProfileModal extends Component{
                     iconPosition='left'
                     placeholder='New Password'
                     type='password'
-                    onChange={e => this.setState({ password: e.target.value})}
+                    value={this.state.newPassword} 
+                    onChange={e => this.setState({ newPassword: e.target.value})}
                   />
                   <Form.Input
                     fluid
@@ -64,9 +111,10 @@ class EditProfileModal extends Component{
                     type='password'
                   />
                   <Form.Input fluid icon='phone' iconPosition='left' placeholder='Phone Number' 
-                  onChange={e => this.setState({ phone: e.target.value})}
+                   value={this.state.phone} 
+                   onChange={e => this.setState({ phone: e.target.value})}
                   />
-                  <Button color='teal' fluid size='large' onClick={this.signUp} name="ok" >
+                  <Button color='teal' fluid size='large' onClick={this.editProfile} name="ok" >
                     OK
                   </Button>
                 </Segment>
@@ -79,12 +127,8 @@ class EditProfileModal extends Component{
   }
 }
 
-
 export default EditProfileModal = withTracker(() => {
-
     return {
-        //Login의 props로 넘겨준다. 
       user: Meteor.user(),
-      
     };
   })(EditProfileModal);

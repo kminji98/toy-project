@@ -32,9 +32,9 @@ class Header extends Component{
     // const name = currentUser.username;
     // console.log(this.props.user.emails);
     return (
-      <div class="ui stackable teal inverted menu">
+      <div className="ui stackable teal inverted menu">
         {this.state.isLoggedIn ? (
-          <div class="ui left text menu" >
+          <div className="ui left text menu" >
             <NavLink to="/post">
               <Button content='Blog Write' inverted basic/>
             </NavLink> 
@@ -45,21 +45,21 @@ class Header extends Component{
         ) : null
         }
            
-        <div class="ui huge inverted center header" >
+        <div className="ui huge inverted center header" >
           <NavLink to="/"  activeStyle={{fontWeight: "bold",color: "white"}}>
             <Icon name='bell' />Bellechat
           </NavLink>
         </div>
         {this.state.isLoggedIn ? 
           (
-          <div class="ui text menu" >
+          <div className="ui text menu" >
             <EditProfileModal />
             <Button content='Log Out' inverted basic onClick={ () => this.logout() }></Button>
           </div>
           ) 
           : 
           (
-            <div class="ui text menu" >
+            <div className="ui text menu" >
              <LoginModal /> 
              <SignUpModal />
             </div>

@@ -46,7 +46,7 @@ export default class SignUpModal extends Component{
           this.setState({
             errors: { none: err.reason },
           });
-          window.alert(err);
+          window.alert(err)
         }else{
           window.location.reload()
         }

@@ -6,15 +6,16 @@ export const Posts = new Mongo.Collection('posts');
 
 
 Meteor.methods({
-    'posts.insert'(text) {
-      check(text, String);
-   
+    'posts.insert'(userid, title, subtitle, description) {
     // Make sure the user is logged in before inserting a task
-    //   if (! this.userId) {
-    //     throw new Meteor.Error('not-authorized');
-    //   }
+      if (! this.userId) {
+        throw new Meteor.Error('not-authorized');
+      }
       Posts.insert({
-        text,
+        userid,
+        title,
+        subtitle,
+        description,
         createdAt: new Date(),
       });
     },
