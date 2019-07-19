@@ -6,6 +6,7 @@ export default class SignUpModal extends Component{
   constructor(props){
     super(props);
     this.state = {
+      isOpen: false,
       email:'',
       username:'',
       password:'',
@@ -48,13 +49,16 @@ export default class SignUpModal extends Component{
           });
           window.alert(err)
         }else{
-          window.location.reload()
+          this.setState({ isOpen : false })
         }
       });
   }
   render(){
     return(
-      <Modal dimmer="inverted" trigger={ <Button content='Sign Up' inverted basic/>}>
+      <Modal closeOnDimmerClick={true} 
+            onClose={e => this.setState({open : false})} 
+            open={this.state.open} dimmer="inverted" 
+            trigger={ <Button content='Sign Up' inverted basic onClick={e => this.setState({open : true}) }/>}>
         <Modal.Content>
           <Grid textAlign='center' verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>

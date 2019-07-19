@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
 
-import { Button, Modal, Form, Grid, Header, Image, Segment, Icon } from 'semantic-ui-react'
+import { Button, Modal, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import { Accounts } from 'meteor/accounts-base';
 
 
@@ -11,6 +11,7 @@ class EditProfileModal extends Component{
     super(props);
     
     this.state = { 
+      isOpen: false,
       email:'',
       password:'',
       newPassword:'',
@@ -26,8 +27,6 @@ class EditProfileModal extends Component{
         phone : this.props.user.profile.phone, 
       })
     }
-    // console.log("didUpdate : "+this.props.user  + " prev : "+prevProps.user)
-    // update된 상황에 사용,  조건문을 잘 써야 함(it must be wrapped in a condition , or you'll cause an infinite loop.)
   }
 
   editProfile = () => {
@@ -52,19 +51,18 @@ class EditProfileModal extends Component{
               username
             }
           }
-        }, (err)=>{
-          if(!err){ window.location.reload() }
-        });
+        }, (err)=>{ if(!err){ window.location.reload() } });
       }
     })
-
-    
   }
 
   render(){
     return(
-      <Modal dimmer="inverted" trigger={ <Button icon="user" content={this.props.user ? this.props.user.profile.username : 'null'} 
-            inverted basic ></Button>}>
+      <Modal closeOnDimmerClick='true' 
+        onClose={e => this.setState({isOpen : false})} open={this.state.isOpen} dimmer="inverted" 
+        trigger={ <Button icon="user" content={this.props.user ? this.props.user.profile.username : 'null'} 
+            onClick={e => this.setState({isOpen : true}) }
+            inverted basic ></Button>} >
         <Modal.Content>
         <Grid textAlign='center' verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>

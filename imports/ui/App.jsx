@@ -1,38 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import TestInputText from './components/TestInputText.jsx';
 import  Header   from './components/Header.jsx';
-import  Post   from './components/Post.jsx';
-
+import  Home   from './components/Home.jsx';
+import  PostForm   from './components/PostForm.jsx';
+import  PostView   from './components/PostView.jsx';
+import FavoriteList from './components/FavoriteList.jsx';
 
 const App = () => (
   <div>
   <Router>
-    <Header />
-    {/* exact path의 개념 */}
-      <Route exact path="/" render={Home} /> 
-      <Route path="/join" component={Join} />
-      <Route path="/post" component={Post} />
-{/* 
-    <h1>HI</h1>
-    <TestInputText /> */}
+  <Header />
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route path="/favorite" component={FavoriteList} />
+      <Route path="/post" component={PostForm} />
+      <Route path="/postView/:_id" component={PostView} />
+    </Switch>
   </Router>
   </div>
 );
 
-function Home() {
-  return (
-      <div>
-      <h2>Home</h2>
-      </div> 
-  );
-}
-function Join() {
-  return (
-      <div>
-      <h2>Join</h2>
-      </div> 
- );
-}
 export default App;

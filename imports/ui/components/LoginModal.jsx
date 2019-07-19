@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Grid, Header, Image, Segment, Icon } from 'semantic-ui-react'
+import { Redirect } from 'react-router-dom';
+import { Button, Modal, Form, Grid, Header, Segment, Icon } from 'semantic-ui-react'
 
 
 export default class LoginModal extends Component{
-  constructor(props){
-    super(props);
-  }
   state = { 
+    isOpen: false,
     email:'',
     password:'',
     errors:'',
   }
-  // show = () => {this.setState({ open: true })}
-  // close = () => {this.setState({ open: false })}
   login= () => {
     const email = this.state.email;
     const password = this.state.password;
-    console.log("state email : "+ email);
-    console.log("state pw : "+ password);
     Meteor.loginWithPassword(email, password, (err) => {
       if (err) {
         this.setState({
@@ -26,14 +21,17 @@ export default class LoginModal extends Component{
         console.log("state errors : "+ this.state.errors.none);
         window.alert(this.state.errors.none);
       } else {
-        window.location.reload()
+        this.setState({ isOpen : false})
       }
     });
   }
 
   render(){
+    const { isOpen, closeOnEscape, closeOnDimmerClick } = this.state
     return(
-      <Modal dimmer="inverted" trigger={ <Button content='Log In' inverted basic />}>
+      <Modal closeOnDimmerClick={true} 
+            onClose={e => this.setState({isOpen : false})} open={this.state.isOpen} dimmer="inverted" 
+            trigger={ <Button content='Log In' inverted basic onClick={e => this.setState({isOpen : true}) } />} >
         <Modal.Content>
         <Grid textAlign='center' style={{ height: '40vh' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
