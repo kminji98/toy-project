@@ -5,7 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/posts/posts.js';
 
 
-class PostContainer extends Component {
+class PostsContainer extends Component {
     constructor(props) {
         super(props);
         this.clickHandler = this.clickHandler.bind(this);
@@ -19,7 +19,7 @@ class PostContainer extends Component {
         let posts = this.props.posts;
         return posts.map((post) => {
             return (
-                    <Card href={`/postView/${post._id}`} key={post._id} color='teal' onClick={(e, d) => {this.clickHandler(post._id);}} style={{margin:10}} key={post._id}>
+                    <Card href={`/postView/${post._id}`} key={post._id} color='teal' onClick={(e, d) => {this.clickHandler(post._id)}} style={{margin:10}} key={post._id}>
                         <Card.Content>
                             <Card.Header>{post.title}</Card.Header>
                             <Card.Meta>{post.subtitle}</Card.Meta>
@@ -51,4 +51,4 @@ export default withTracker(() => {
     return {
       posts: Posts.find({ }).fetch(),
     };
-  })(PostContainer);
+  })(PostsContainer);

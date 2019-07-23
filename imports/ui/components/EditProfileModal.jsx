@@ -58,7 +58,7 @@ class EditProfileModal extends Component{
 
   render(){
     return(
-      <Modal closeOnDimmerClick='true' 
+      <Modal closeOnDimmerClick={true} 
         onClose={e => this.setState({isOpen : false})} open={this.state.isOpen} dimmer="inverted" 
         trigger={ <Button icon="user" content={this.props.user ? this.props.user.profile.username : 'null'} 
             onClick={e => this.setState({isOpen : true}) }
@@ -71,10 +71,7 @@ class EditProfileModal extends Component{
               </Header>
               <Form size='large' onSubmit={this.signUp}>
                 <Segment stacked>
-                  {/* 이미지가 있는 경우 */}
-                  {/* <Image src='https://react.semantic-ui.com/images/wireframe/square-image.png' size='tiny' circular verticalAlign='middle'/> */}
-                  {/* <Divider /> */}
-              
+           
                   <Form.Input fluid icon='mail' iconPosition='left' type="email" 
                      value={this.props.user ? this.props.user.emails[0].address : ''} readOnly 
                   />

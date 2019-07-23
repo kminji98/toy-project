@@ -21,3 +21,6 @@ less
 accounts-password
 accounts-base
 momentjs:moment
+mizzao:user-status
+aldeed:simple-schema
+aldeed:collection2

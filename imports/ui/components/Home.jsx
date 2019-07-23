@@ -6,13 +6,24 @@ import Profile from './Profile.jsx';
 import Messages from './Messages.jsx';
 
 class Home extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            selectedUser: '',
+        }
+    }
+
+    handleSelectUser = (user) => {
+        this.setState({selectedUser : user})
+    }
+
     render() {
         return (
             <Container>
             <Grid>
                 <Grid.Row>
-                <Users />
-                <Profile />
+                <Users onChange={this.handleSelectUser} />
+                <Profile selectedUser={this.state.selectedUser} />
                 <Messages />
                 </Grid.Row>
             </Grid>

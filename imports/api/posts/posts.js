@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
 
 export const Posts = new Mongo.Collection('posts');
 
@@ -42,9 +41,4 @@ Meteor.methods({
           }
         );
       },
-    'posts.remove'(postId){
-        check(postId, String);
-        const post = Posts.findOne(postId);
-        Posts.remove(post);
-    },
   });
