@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Users } from '../../api/users/users.js';
 
-import { Feed, Grid, Card, Image, Icon, Search, Segment, Message} from 'semantic-ui-react';
+import { Grid, Card, Image, Icon} from 'semantic-ui-react';
 class Profile extends Component{
 
     render(){
@@ -13,6 +13,9 @@ class Profile extends Component{
             userName = this.props.selectedUser.title;
             phone = this.props.selectedUser.description;
             email = this.props.selectedUser.price;
+        }
+        if(!Meteor.userId()){
+            phone = ''; email = '';
         }
 
         return (

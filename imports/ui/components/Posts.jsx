@@ -7,19 +7,18 @@ import { Posts } from '../../api/posts/posts.js';
 
 class PostsContainer extends Component {
     constructor(props) {
-        super(props);
-        this.clickHandler = this.clickHandler.bind(this);
+        super(props)
+        this.clickHandler = this.clickHandler.bind(this)
     }
-    clickHandler(postId) {
-        if(!Meteor.user()){
-            alert("로그인을 해주세요");
-        }
+    clickHandler(e, postId) {
+        if(!Meteor.user())
+            alert("로그인을 해주세요")
     } 
     renderPost(){
         let posts = this.props.posts;
         return posts.map((post) => {
             return (
-                    <Card href={`/postView/${post._id}`} key={post._id} color='teal' onClick={(e, d) => {this.clickHandler(post._id)}} style={{margin:10}} key={post._id}>
+                    <Card href={Meteor.user() ? `/postView/${post._id}` : '/'} key={post._id} color='teal' onClick={(e, d) => {this.clickHandler(post._id)}} style={{margin:10}} >
                         <Card.Content>
                             <Card.Header>{post.title}</Card.Header>
                             <Card.Meta>{post.subtitle}</Card.Meta>
