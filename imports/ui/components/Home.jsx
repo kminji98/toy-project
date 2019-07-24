@@ -13,8 +13,8 @@ class Home extends Component {
         }
     }
 
-    handleSelectUser = (user) => {
-        this.setState({selectedUser : user})
+    handleSelectUser = (result) => {
+        this.setState({selectedUser : result})
     }
 
     render() {

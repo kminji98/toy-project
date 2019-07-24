@@ -35,16 +35,16 @@ class Header extends Component{
         { this.state.isLoggedIn ? (
           <div className="ui left text menu" >
             <NavLink to="/post">
-              <Button content='Blog Write' inverted basic/>
+              <Button icon='pencil alternate' content='Post' inverted basic/>
             </NavLink> 
             <NavLink to="/favorite">
-              <Button content='Favorite' inverted basic/>
+              <Button icon="heart" content='Favorite' inverted basic/>
             </NavLink>          
           </div>
         ) : null
         }
         <div className="ui huge inverted center header" >
-          <NavLink to="/"  activeStyle={{fontWeight: "bold",color: "white"}}>
+          <NavLink to="/"  activeStyle={{fontWeight: "bold", color: "white"}}>
             <Icon name='bell' />Bellechat
           </NavLink>
         </div>
@@ -52,7 +52,7 @@ class Header extends Component{
           (
             <div className="ui text menu" >
               <EditProfileModal />
-              <Button content='Log Out' inverted basic onClick={ () => this.logout() }></Button>
+              <Button icon='sign-out' content='Log Out' inverted basic onClick={ () => this.logout() }></Button>
             </div>
           ) 
           : 

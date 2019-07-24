@@ -9,10 +9,10 @@ class Profile extends Component{
         let userName = 'user A';
         let phone = '010-000-0000';
         let email = 'email';
-        if(this.props.selectedUser.profile){
-            userName = this.props.selectedUser.profile.username;
-            phone = this.props.selectedUser.profile.phone;
-            email = this.props.selectedUser.emails[0].address;
+        if(this.props.selectedUser){
+            userName = this.props.selectedUser.title;
+            phone = this.props.selectedUser.description;
+            email = this.props.selectedUser.price;
         }
 
         return (

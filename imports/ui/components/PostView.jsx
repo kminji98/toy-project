@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Form, Container, Grid, Header, Icon, Comment, Card, Segment } from 'semantic-ui-react'
 import { Posts } from '../../api/posts/posts.js';
@@ -53,14 +54,19 @@ class PostView extends Component{
     }
 
     render(){
-        let isFavorite;
+        let isFavorite, isWriter='';
         if(this.props.post){
-            var dateToPass =moment(this.props.post.createdAt).fromNow()
+            var dateToPass = moment(this.props.post.createdAt).fromNow()
             if(this.props.post.favorites){ isFavorite = this.props.post.favorites.includes(this.props.userId) }
         }else{
             isFavorite = false; dateToPass ='';
         }
-        
+    
+        if(this.props.post && this.props.post.userId == this.props.userId ){
+            isWriter = (<Segment textAlign='center' color='grey'>
+                         <NavLink to={`/postEdit/${this.props.post._id}`}> Edit </NavLink>
+                        </Segment>)
+        }
         return(
             <Grid centered>
             <Grid.Row verticalAlign='middle'>
@@ -77,7 +83,8 @@ class PostView extends Component{
                     </Segment>
                     <Segment.Group horizontal >
                         <Segment textAlign='center' color='grey'>writer : {this.props.post ? this.props.post.userName : ''} </Segment>
-                        <Segment textAlign='center' color='grey'><i color='grey'> {dateToPass} </i></Segment>
+                        <Segment textAlign='center' color='grey'><i> {dateToPass} </i></Segment>
+                        { isWriter }
                     </Segment.Group>
                     </Segment.Group>
                 </Grid.Column>

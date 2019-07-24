@@ -58,7 +58,7 @@ export default class SignUpModal extends Component{
       <Modal closeOnDimmerClick={true} 
             onClose={e => this.setState({open : false})} 
             open={this.state.open} dimmer="inverted" 
-            trigger={ <Button content='Sign Up' inverted basic onClick={e => this.setState({open : true}) }/>}>
+            trigger={ <Button icon='user plus' content='Sign Up' inverted basic onClick={e => this.setState({open : true}) }/>}>
         <Modal.Content>
           <Grid textAlign='center' verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>

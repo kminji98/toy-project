@@ -41,4 +41,17 @@ Meteor.methods({
           }
         );
       },
+      'posts.update'(postId, title, subtitle, description) {
+        if (! this.userId) { throw new Meteor.Error('not-authorized'); }
+        Posts.update(
+          { _id : postId},
+          {
+            $set: { 
+              title : title,
+              subtitle: subtitle,
+              description: description
+            }       
+          }
+        );
+      },
   });

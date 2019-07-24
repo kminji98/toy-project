@@ -31,7 +31,7 @@ export default class LoginModal extends Component{
     return(
       <Modal closeOnDimmerClick={true} 
             onClose={e => this.setState({isOpen : false})} open={this.state.isOpen} dimmer="inverted" 
-            trigger={ <Button content='Log In' inverted basic onClick={e => this.setState({isOpen : true}) } />} >
+            trigger={ <Button icon='sign-in' content='Log In' inverted basic onClick={e => this.setState({isOpen : true}) } />} >
         <Modal.Content>
         <Grid textAlign='center' style={{ height: '40vh' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
