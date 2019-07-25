@@ -18,20 +18,20 @@ class PostsContainer extends Component {
         let posts = this.props.posts;
         return posts.map((post) => {
             return (
-                    <Card href={Meteor.user() ? `/postView/${post._id}` : '/'} key={post._id} color='teal' onClick={(e, d) => {this.clickHandler(post._id)}} style={{margin:10}} >
-                        <Card.Content>
-                            <Card.Header>{post.title}</Card.Header>
-                            <Card.Meta>{post.subtitle}</Card.Meta>
-                            <Card.Description>{post.description}</Card.Description>
-                        </Card.Content>
-                        <Card.Content extra >
-                            <Icon name='heart' />
-                            {post.favorites ? post.favorites.length : '0'}
-                            <span className='right floated'><Icon name='comment' />
-                            {post.comments ? post.comments.length : '0'}                            
-                            </span>
-                        </Card.Content>
-                    </Card>
+                <Card href={ this.props.userId ? `/postView/${post._id}` : '/'} key={post._id} color='teal' onClick={(e, d) => {this.clickHandler(post._id)}} style={{margin:10}} >
+                    <Card.Content>
+                        <Card.Header>{post.title}</Card.Header>
+                        <Card.Meta>{post.subtitle}</Card.Meta>
+                        <Card.Description>{post.description}</Card.Description>
+                    </Card.Content>
+                    <Card.Content extra >
+                        <Icon name='heart' />
+                        {post.favorites ? post.favorites.length : '0'}
+                        <span className='right floated'><Icon name='comment' />
+                        {post.comments ? post.comments.length : '0'}                            
+                        </span>
+                    </Card.Content>
+                </Card>
             );
         });     
       }
@@ -49,5 +49,6 @@ export default withTracker(() => {
     Meteor.subscribe('posts');
     return {
       posts: Posts.find({ }).fetch(),
+      userId: Meteor.userId(),
     };
   })(PostsContainer);

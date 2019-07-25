@@ -54,7 +54,6 @@ class PostView extends Component{
     }
 
     render(){
-        if(!this.props.userId) return null;
         let isFavorite, isWriter='';
         if(this.props.post){
             var dateToPass = moment(this.props.post.createdAt).fromNow()
