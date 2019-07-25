@@ -33,6 +33,7 @@ class PostEdit extends Component{
     }
 
     render(){
+        if(!this.props.userId || this.props.userId === this.props.post._id) return null;
         return(
              <Container>
                 <Grid>

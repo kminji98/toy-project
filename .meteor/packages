@@ -24,3 +24,4 @@ momentjs:moment
 mizzao:user-status
 aldeed:simple-schema
 aldeed:collection2
+meteortesting:mocha

@@ -63,18 +63,13 @@ class Header extends Component{
             </div>
           )
         }
-          
       </div>
     );
   }
 }
 
-
 export default Header = withTracker(() => {
-
   return {
-      //Login의 props로 넘겨준다. 
     user: Meteor.user(),
-    
   };
 })(Header);
