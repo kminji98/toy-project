@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Feed, List, Grid, Icon, Search, Segment, Input, Form, Label} from 'semantic-ui-react';
+import { List, Grid, Segment, Input, Form, Label, Container} from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Messages } from '../../api/messages/messages.js';
@@ -49,8 +49,9 @@ class MessagesContainer extends Component{
     render(){
         return (
            <Grid.Column width={8}>
-                <Segment>
-                    <div  style={{ overflow: 'auto', height: '21em'}} ref={this.messagesRef} >
+               <Segment>
+                <Container>
+                    <div style={{ overflow: 'auto', height: '21em'}} ref={this.messagesRef} >
                     <List >
                         {this.props.userId ? this.renderMessages() : (<List.Item style={{color:'grey'}}>Please Login</List.Item>)}
                     </List>
@@ -62,7 +63,8 @@ class MessagesContainer extends Component{
                         :  
                         ( <Input fluid icon='send' placeholder='Please Login.....' disabled /> )
                     }
-                </Segment>
+                </Container>
+               </Segment>
             </Grid.Column>
         );
     }

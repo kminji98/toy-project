@@ -9,7 +9,6 @@ import { Accounts } from 'meteor/accounts-base';
 class EditProfileModal extends Component{
   constructor(props){
     super(props);
-    
     this.state = { 
       isOpen: false,
       email:'',
@@ -19,6 +18,14 @@ class EditProfileModal extends Component{
       username: '',
       errors:'',
     }
+  }
+  componentDidMount(){
+    if(this.props.user){
+      this.setState({ 
+        username : this.props.user.profile.username, 
+        phone : this.props.user.profile.phone, 
+      })
+    } 
   }
   componentDidUpdate(prevProps){
     if(prevProps.user !== this.props.user){
@@ -57,6 +64,7 @@ class EditProfileModal extends Component{
   }
 
   render(){
+
     return(
       <Modal closeOnDimmerClick={true} 
         onClose={e => this.setState({isOpen : false})} open={this.state.isOpen} dimmer="inverted" 

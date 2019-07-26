@@ -30,6 +30,8 @@ Meteor.methods({
         title,
         subtitle,
         description,
+        favorites: [],
+        comments: [],
         createdAt: new Date(),
       });
     },

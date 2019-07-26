@@ -1,8 +1,6 @@
-import PropTypes from 'prop-types'
 import _ from 'lodash'
-import faker from 'faker'
 import React, { Component } from 'react';
-import { Feed, Grid, Search, Segment, Label} from 'semantic-ui-react';
+import { Feed, Grid, Search, Segment} from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Users } from '../../api/users/users.js';
 
@@ -28,7 +26,6 @@ class UsersContainer extends Component{
   
         setTimeout(() => {
             if (this.state.value.length < 1) return this.setState( { isLoading: false, results: [], value: '' })
-    
             const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
             const isMatch = result => re.test(result.title)
             const source = users;
@@ -48,13 +45,14 @@ class UsersContainer extends Component{
                 description : user.profile.phone,
                 price: user.emails[0].address
             }
+            
             if(!user.status) return null
            return (
             <Feed.Event key={ user._id }>
                     <Feed.Content >
                         <Feed.Summary >
                         <Feed.User  onClick={ e => {this.props.onChange(result)} }>{ user.profile.username }</Feed.User>
-                        <Feed.Date>{ user.status.online ? 'online' : 'offline' }</Feed.Date>
+                        <Feed.Date>{ user.status.online ? 'online' : moment(user.status.lastLogin.date).fromNow() }</Feed.Date>
                         </Feed.Summary>
                     </Feed.Content>
             </Feed.Event> );
@@ -91,6 +89,5 @@ export default withTracker(() => {
     Meteor.subscribe('users');
     return {
       users: Users.find({ }).fetch(),
-
     };
   })(UsersContainer);
