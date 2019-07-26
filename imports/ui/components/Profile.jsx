@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Users } from '../../api/users/users.js';
-
 import { Grid, Card, Image, Icon} from 'semantic-ui-react';
 class Profile extends Component{
 
@@ -21,7 +20,7 @@ class Profile extends Component{
         return (
            <Grid.Column width={4}>
                     <Card>
-                        <Image src='https://react.semantic-ui.com/images/avatar/large/daniel.jpg' wrapped ui={false} />
+                        <Image src='./belle.png' wrapped ui={false} />
                         <Card.Content>
                         <Card.Header>{userName}</Card.Header>
                         </Card.Content>
