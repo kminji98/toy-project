@@ -38,9 +38,9 @@ class PostsContainer extends Component {
     render(){
         return(
             <Container>
-            <Card.Group itemsPerRow={4}>
-                {this.renderPost()}
-            </Card.Group>
+                <Card.Group itemsPerRow={4}>
+                    {this.renderPost()}
+                </Card.Group>
             </Container>
         );
     }

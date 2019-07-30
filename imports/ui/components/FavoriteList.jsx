@@ -10,29 +10,29 @@ class FavoriteList extends Component {
         return postsList.map((post) => {
             if(!post.favorites){ return; }
             return (
-                    <Card href={`/postView/${post._id}`} key={post._id} color='teal' style={{margin:10}} key={post._id}>
-                        <Card.Content>
-                            <Card.Header>{post.title}</Card.Header>
-                            <Card.Meta>{post.subtitle}</Card.Meta>
-                            <Card.Description>{post.description}</Card.Description>
-                        </Card.Content>
-                        <Card.Content extra >
-                            <Icon name='heart' />
-                            {post.favorites ? post.favorites.length : '0'}
-                            <span className='right floated'><Icon name='comment' />
-                            {post.comments ? post.comments.length : '0'}                            
-                            </span>
-                        </Card.Content>
-                    </Card>
+                <Card href={`/postView/${post._id}`} key={post._id} color='teal' style={{margin:10}} key={post._id}>
+                    <Card.Content>
+                        <Card.Header>{post.title}</Card.Header>
+                        <Card.Meta>{post.subtitle}</Card.Meta>
+                        <Card.Description>{post.description}</Card.Description>
+                    </Card.Content>
+                    <Card.Content extra >
+                        <Icon name='heart' />
+                        {post.favorites ? post.favorites.length : '0'}
+                        <span className='right floated'><Icon name='comment' />
+                        {post.comments ? post.comments.length : '0'}                            
+                        </span>
+                    </Card.Content>
+                </Card>
             );
         });     
       }
     render(){
         return(
             <Container>
-            <Card.Group itemsPerRow={4}>
-                {this.renderFavoritePost()}
-            </Card.Group>
+                <Card.Group itemsPerRow={4}>
+                    {this.renderFavoritePost()}
+                </Card.Group>
             </Container>
         );
     }
